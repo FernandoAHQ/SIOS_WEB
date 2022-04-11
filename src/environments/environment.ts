@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  ///baseURL: 'http://10.1.25.46:4000/api'
+  baseURL: 'https://sios-server.herokuapp.com/api'
 };
 
 /*

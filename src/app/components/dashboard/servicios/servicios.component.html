@@ -1,0 +1,33 @@
+<mat-toolbar>
+
+    <span>SERVICIOS</span>
+
+<span class="example-spacer"></span>
+
+    <mat-chip-list aria-label="Dog selection">
+        <mat-chip color="warn" selected (click)="CambiarHoy()">
+        <mat-chip-avatar>
+            <img src="https://material.angular.io/assets/img/examples/shiba1.jpg" alt="Photo of a Shiba Inu"/>
+        </mat-chip-avatar>
+        Hoy
+        </mat-chip>
+        <mat-chip color="warn" selected (click)="CambiarHistorial()">
+        <mat-chip-avatar>
+            <img src="https://material.angular.io/assets/img/examples/shiba1.jpg" alt="Photo of a Shiba Inu"/>
+        </mat-chip-avatar>
+        Historial
+        </mat-chip>
+    </mat-chip-list>
+
+
+</mat-toolbar>
+
+<app-servicios-hoy></app-servicios-hoy>
+
+
+<br>
+<br>
+<br>
+
+
+<app-servicios-historial></app-servicios-historial>
