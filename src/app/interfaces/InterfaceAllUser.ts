@@ -2,7 +2,7 @@ export interface RespAlluser{
 
     status : boolean;
     users? : DataUsers[];
-
+    totalResults: number;
 
 }
 

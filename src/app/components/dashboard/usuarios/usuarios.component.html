@@ -9,7 +9,7 @@
           <mat-form-field appearance="fill" class="select">
             <mat-label>SELECCIONE UN ROLE</mat-label>
             <mat-select [(value)]="role_selected" (valueChange)="cambioRole($event)">
-              <mat-option *ngFor="let role of roles" [value]= "role.value" > {{role.viewValue}} </mat-option>
+              <mat-option *ngFor="let role of roles" [value]= "role.value" > {{role.name}} </mat-option>
               
             </mat-select>
           </mat-form-field>
@@ -62,6 +62,13 @@
              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         
-      </table>
+      </table>  
+
+      <div *ngIf="!Cargando">
+
+        <app-paginador [totalResults]="TotalResultados" [limitProducts]="20"></app-paginador>
+
+      </div>
+     
       
 </div>

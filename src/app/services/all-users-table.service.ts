@@ -19,9 +19,10 @@ export class AllUsersTableService {
 
   }
 
-  Get_UserAPI(usuario : string){
+  Get_UserAPI(usuario : string, page :  any ){
   
-    const url= `${this.baseURL}/users/all/${usuario}`;
+    const url= `${this.baseURL}/users/all/${usuario}?page=${page}`;
+    console.log(url);
     return this.http.get<RespAlluser>(url)
     .pipe(
       tap(resp => {

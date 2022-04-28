@@ -6,10 +6,11 @@ import { DataUsers } from 'src/app/interfaces/InterfaceAllUser';
 import { AllUsersTableService } from 'src/app/services/all-users-table.service';
 import { _getFocusedElementPierceShadowDom } from '@angular/cdk/platform';
 import {FormControl} from '@angular/forms';
-  interface Roles {
-    value: string;
-    viewValue: string;
-  }
+import { ActivatedRoute, Router } from '@angular/router';
+import { query } from '@angular/animations';
+import { ServicesByStatusService } from '../../../services/services-by-status.service';
+import { Role } from 'src/app/interfaces/RespApi';
+
   
   
  
@@ -25,23 +26,36 @@ import {FormControl} from '@angular/forms';
 
 export class UsuariosComponent implements OnInit {
 
-  role_selected: string = "USER_ROLE" ;
+  role_selected: string = "user_role" ;
 
-  roles: Roles[] = [
-    {value: 'ADMIN_ROLE', viewValue: 'ADMINSTRADOR'},
-    {value: 'SITE_ROLE', viewValue: 'SITE'},
-    {value: 'USER_ROLE', viewValue: 'DEPARTAMENTOS'},
-  ];
+  roles!: Role[];
 
-  
 
   constructor(
-    private AllUsersTableService: AllUsersTableService ) {
+    private AllUsersTableService: AllUsersTableService,
+    private activatedRoute: ActivatedRoute,
+    private router:Router,
+    private ServicesByStatusService: ServicesByStatusService,
+    ) {
  
      }
 
     ngOnInit(): void {
-      this._getInitUsers("USER_ROLE");
+
+        this.cargarRoles()
+
+        this.activatedRoute.queryParams.subscribe((querys:any)=>{
+        //console.log(querys.page)
+        if(!querys.page){
+          this.PaginaActual= 1;
+        }
+        else{this.PaginaActual=querys.page}
+        if(!querys.role){
+          this.role_selected= 'user_role'
+        }
+        else{ this.role_selected=querys.role}
+        this._getInitUsers(this.role_selected, this.PaginaActual)
+      })
     }
 
     get _Users(){  
@@ -51,8 +65,10 @@ export class UsuariosComponent implements OnInit {
     }
 
   
-
+  PaginaActual : number =1;
+  Cargando= false;
   ELEMENT_DATA_TABLE: DataUsers[] = this._Users;
+  TotalResultados: number = 0;
   displayedColumns: string[] = ['Foto', 'Usuario', 'Nombre', 'Role', 'Acciones'];
   dataSource = new  MatTableDataSource <DataUsers>(this.ELEMENT_DATA_TABLE);
   
@@ -64,24 +80,39 @@ export class UsuariosComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  _getInitUsers(role : string){ 
+  _getInitUsers(role : string, page: number){ 
 
-    this.AllUsersTableService.Get_UserAPI(role).subscribe(
-      resp=> this.dataSource.data = resp.users as DataUsers[]
+    //console.log(`${role}     ${page}`);
+    this.Cargando=true;
+    this.AllUsersTableService.Get_UserAPI(role,page).subscribe(
+      resp=> {
+        this.dataSource.data = resp.users as DataUsers[]
+        this.TotalResultados= resp.totalResults;
+        //console.log(resp)
+        this.Cargando= false;
+      }
 
     )
   }
 
-  cargarUsuarios(){
-      const data= "Admin_role"
-      this.AllUsersTableService.Get_UserAPI(data).subscribe(
-      resp=> this.dataSource.data = resp.users as DataUsers[]
+  cargarRoles(){
+
+    this.ServicesByStatusService.Get_RolesAPI().subscribe(
+      resp=>{
+        this.roles=resp.roles
+        console.log(resp.roles);
+      }
     )
+
   }
 
   cambioRole(newRole : any){
 
-    this._getInitUsers(newRole)
+    //this._getInitUsers(1)
+    
+    this.router.navigateByUrl(`dashboard/usuarios?page=1&role=${newRole}`)
+    //console.log(`ROLES TS   `+ newRole +`  ---->   ` + `dashboard/usuarios?page=1&role=${newRole}`  );
+
 
   }
 

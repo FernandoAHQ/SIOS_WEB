@@ -46,7 +46,7 @@ export class CrearDeptoComponent implements OnInit {
 
     ngOnInit(): void {
 
-      this.AllUsersTableService.Get_UserAPI("USER_ROLE").subscribe(
+      this.AllUsersTableService.Get_UserAPI("USER_ROLE",1).subscribe(
         resp=> this.DataUsers = resp.users as DataUsers[]
         )
 

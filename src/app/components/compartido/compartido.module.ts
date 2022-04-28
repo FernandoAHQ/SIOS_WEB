@@ -18,9 +18,10 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatSelectModule} from '@angular/material/select';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { PaginadorComponent } from '../dashboard/paginador/paginador.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [PaginadorComponent],
   imports: [
     CommonModule,
     MatInputModule,
@@ -43,7 +44,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
   ],
   exports:[
     
-    CommonModule,MatInputModule,
+    CommonModule,
+    MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
     ReactiveFormsModule,
@@ -59,6 +61,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatSelectModule,
     MatChipsModule,
     MatPaginatorModule,
+    PaginadorComponent,
 
   ]
 })

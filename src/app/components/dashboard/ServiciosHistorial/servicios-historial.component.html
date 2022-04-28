@@ -8,8 +8,8 @@
 
           <mat-form-field appearance="fill" class="select">
             <mat-label>SELECCIONE POR STATUS</mat-label>
-            <mat-select [(value)]="role_selected" (valueChange)="cambioStatus($event)">
-              <mat-option *ngFor="let level of Levels" [value]= "level.value" > {{level.viewValue}} </mat-option>
+            <mat-select [(value)]="status_selected" (valueChange)="cambioStatus($event)">
+              <mat-option *ngFor="let level of Levels" [value]= "level.value" > {{level.name}} </mat-option>
               
             </mat-select>
         </mat-form-field>
@@ -67,6 +67,12 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     
   </table>
+
+  <div *ngIf="!Cargando">
+
+    <app-paginador [totalResults]="TotalResultados" [limitProducts]="20"></app-paginador>
+
+  </div>
 
 
 </div>

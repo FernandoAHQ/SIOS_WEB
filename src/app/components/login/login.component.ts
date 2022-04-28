@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
 
 DarBievenida(nombre : string){
 
-    const mensaje = "Bienvenido "+ `${nombre}` + " !!!"
+    const mensaje = "Bienvenido "+ `${nombre}` + " !"
     this.loading()
     this._snackBar.open(mensaje,'',{
 
@@ -69,7 +69,7 @@ DarBievenida(nombre : string){
 
     })
 
-    this.loading()
+    //this.loading()
 
   }
 

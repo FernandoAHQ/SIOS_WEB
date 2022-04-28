@@ -12,17 +12,20 @@ import { LoginComponent } from './components/login/login.component';
 import { CompartidoModule } from './components/compartido/compartido.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorTokenService } from './Interceptors/interceptor-token.service';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    CompartidoModule
+    CompartidoModule,
+    CommonModule
 
   ],
   providers: [

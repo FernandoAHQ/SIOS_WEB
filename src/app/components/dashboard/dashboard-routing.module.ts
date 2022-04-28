@@ -8,6 +8,7 @@ import { DepartamentosComponent } from './departamentos/departamentos.component'
 import { CrearDeptoComponent } from './departamentos/crear-depto/crear-depto.component';
 import { AsignarServiceComponent } from './asignarService/asignar-service.component';
 import { ServiciosComponent } from './servicios/servicios.component';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
 
@@ -20,13 +21,13 @@ const routes: Routes = [
     {path:  'departamentos', component: DepartamentosComponent},
     {path:  'crearDepto', component: CrearDeptoComponent},
     {path:  'asignar', component: AsignarServiceComponent},
-    {path:  'servicios', component: ServiciosComponent},
+    {path:  'servicios', loadChildren: ()=>import('./servicios/servicios.module').then(m=>m.ServiciosModule)}
 
   ]}
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(routes), CommonModule],
   exports: [RouterModule]
 })
 export class DashboardRoutingModule { }
