@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ChicoServicio, Service } from 'src/app/interfaces/RespApi';
+import { ChicoServicio } from 'src/app/interfaces/RespApi';
 import { ServicesByStatusService } from '../../../services/services-by-status.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { Severity } from '../../../interfaces/RespApi';
-
-
-export interface ServicioFake {
-  Folio:    any;
-  Usuario:  any;
-  Status:   any;
-}
+import { ServiciosService } from 'src/app/services/admin-role/servicios.service';
+import { Service } from 'src/app/interfaces/Interfaces';
+import { SocketWebService } from '../../../services/socket-web.service';
+import { AssignInterface } from '../../../interfaces/Interfaces';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalDelServicioComponent } from './modal-del-servicio/modal-del-servicio.component';
 
 
 @Component({
@@ -21,35 +20,44 @@ export class ServiciosHoyComponent implements OnInit {
 
   UserSite_selected: string = "Carlos Castillo";
   Severities_selected: string= "Alta";
-  UsersSite!: ChicoServicio[];
 
-  Severities!: Severity[];
+  displayedColumns: string[];
+  ELEMENT_DATA_TABLE: Service[];
+  dataSource : MatTableDataSource <Service>;
+  
 
-  constructor(private ServicesByStatusService: ServicesByStatusService) { }
+  
+
+
+
+  constructor(
+    private socketWebService: SocketWebService,
+    private ServicesByStatusService: ServicesByStatusService,
+    public dialog: MatDialog,
+    public serviciosServices : ServiciosService) {
+      this.displayedColumns= [ 'Departamento', 'Titulo','Status', 'Categoria', "Acciones"];
+      this.ELEMENT_DATA_TABLE = this.serviciosServices.servicios;
+      this.dataSource = new  MatTableDataSource <Service>(this.ELEMENT_DATA_TABLE);
+
+    }
 
   ngOnInit(): void {
-    this.cargarUsersSite();
-    this.cargarSeverities();
+      this.serviciosServices.getServicios().subscribe((serv)=>{
+        this.dataSource.data = serv as Service[];
+      });
+
+      
   }
 
-  get _Users(){  
-    
+  get _Users(){
+
     return this.ServicesByStatusService.DataTable
-  
+
   }
 
 
 
-  ELEMENT_DATA_TABLE: ServicioFake[] = [
-    {Folio:'2020-10-1:122', Usuario:'Computo', Status:'FFF'},
-  ]
 
-
-  displayedColumns: string[] = ['Folio', 'Usuario', 'Status', 'Asignar' ,"Nivel", "Acciones"];
-  dataSource = new  MatTableDataSource <ServicioFake>(this.ELEMENT_DATA_TABLE);
-  
-  
-    
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -57,26 +65,18 @@ export class ServiciosHoyComponent implements OnInit {
 
 
 
-  cargarUsersSite(){
+  
 
-    this.ServicesByStatusService.Get_ActiveUsersAPI().subscribe(
-      resp=>{
-        this.UsersSite= resp.users;
-      }
-    )
-
-  }
+  asignar (servicio:Service ){
+    
+    this.dialog.open(ModalDelServicioComponent, {width: '1500px',data:servicio})
 
 
-  cargarSeverities(){
-
-    this.ServicesByStatusService.Get_SeveritiesAPI().subscribe(
-      resp=>{
-        this.Severities= resp.severities;
-      }
-    )
+    console.log(servicio);
 
   }
+
+  
 
 
 }

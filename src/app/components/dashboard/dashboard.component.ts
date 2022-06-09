@@ -12,7 +12,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log('DASHBOARD')
     this.SocketWebService.escucharService()
   }
 

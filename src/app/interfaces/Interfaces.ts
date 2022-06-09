@@ -1,3 +1,6 @@
+import { AbstractType } from "@angular/core";
+import { Severity } from './RespApi';
+
 export interface LoginInterface{
 
     status:         boolean;
@@ -45,6 +48,23 @@ export interface RespuestaRegistrarUsuario{
 } 
 
 
+export interface RespEditar {
+    message: string;
+    status:  boolean;
+    user:    User_Editar;
+}
+
+export interface User_Editar {
+    _id:      string;
+    name:     string;
+    username: string;
+    image:    string;
+    role:     string;
+    online:   boolean;
+    isActive: boolean;
+}
+
+
 
 export interface RegistrarUsuario{
 
@@ -59,4 +79,82 @@ export interface RegistrarUsuario{
 
 
 
+export interface Service{
+    _id: string,
+    createdAt: Date,
+    report: Report,
+    staff?: User,
+    status: string,
+    updatedAt: Date,
+}
 
+export interface Report{
+    _id: string,
+    category: string,
+    createdAt: Date,
+    department: Department,
+    description: string,
+    isAssigned: boolean,
+    title: string,
+    updatedAt: Date
+}
+
+export interface Department {
+    _id:       string;
+    name:      string;
+    ubication: string;
+    user:      string;
+    __v:       number;
+}
+
+
+
+export interface AssignInterface{
+
+    from:       string;
+    to:         string;
+    service:    any;
+    severity:   string;
+    depto:      string;
+
+}
+
+
+export interface RespBitacora {
+    status:       boolean;
+    bitacora:     Bitacora[];
+    totalResults: number;
+}
+
+export interface Bitacora {
+    _id:         string;
+    description: string;
+    solution:    string;
+}
+
+
+export interface RespuestaCrearPeriodo {
+    status:  boolean;
+    message: string;
+    period:  Period;
+}
+
+export interface Period {
+    name:      string;
+    startDate: Date;
+    finalDate: Date;
+    isActive:  boolean;
+    _id:       string;
+}
+
+
+export interface GetAllPeriodos {
+    status:       boolean;
+    periods:      Period[];
+    totalResults: number;
+}
+
+export interface GradeInterface {
+    dificulty: number;
+    quality: number;
+}

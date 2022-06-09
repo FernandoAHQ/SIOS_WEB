@@ -14,6 +14,13 @@ import { AsignarServiceComponent } from './asignarService/asignar-service.compon
 import { ServiciosComponent } from './servicios/servicios.component';
 import { ServiciosHistorialComponent } from './ServiciosHistorial/servicios-historial.component';
 import { ServiciosHoyComponent } from './ServiciosHoy/servicios-hoy.component';
+import { ModalDelServicioComponent } from './ServiciosHoy/modal-del-servicio/modal-del-servicio.component';
+import { ModalEditUserComponent } from './usuarios/modal-edit-user/modal-edit-user.component';
+import { BitacoraComponent } from './bitacora/bitacora.component';
+import { PeriodosComponent } from './periodos/periodos.component';
+import { CrearPeriodoComponent } from './periodos/crear-periodo/crear-periodo.component';
+import { ModalperiodosComponent } from './periodos/modalperiodos/modalperiodos.component';
+import { RankingComponent } from './ranking/ranking.component';
 
 
 
@@ -30,7 +37,14 @@ import { ServiciosHoyComponent } from './ServiciosHoy/servicios-hoy.component';
     AsignarServiceComponent,
     ServiciosComponent,
     ServiciosHistorialComponent,
-    ServiciosHoyComponent
+    ServiciosHoyComponent,
+    ModalDelServicioComponent,
+    ModalEditUserComponent,
+    BitacoraComponent,
+    PeriodosComponent,
+    CrearPeriodoComponent,
+    ModalperiodosComponent,
+    RankingComponent,
   ],
   imports: [
     CommonModule,

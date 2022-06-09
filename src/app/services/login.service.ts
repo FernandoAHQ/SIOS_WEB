@@ -34,6 +34,7 @@ export class LoginService {
           if(resp.status){
             localStorage.setItem('token',resp.accessToken!);
             localStorage.setItem('menu',JSON.stringify(resp.menu!));
+            localStorage.setItem('IdAdmin', resp.user?._id!);
             
             this._usuario=resp.user!;
           }

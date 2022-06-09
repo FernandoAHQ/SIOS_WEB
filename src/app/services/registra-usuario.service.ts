@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { RegistrarUsuario, RespuestaRegistrarUsuario } from '../interfaces/Interfaces';
+import { RegistrarUsuario, RespEditar, RespuestaRegistrarUsuario } from '../interfaces/Interfaces';
 import { map, catchError, tap } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 @Injectable({
@@ -36,6 +36,21 @@ export class RegistraUsuarioService {
       
   }
 
-  
+  editar(usuario: any, name: any, username:any  ){
 
+    const url = `${this.baseURL}/users/update/${usuario}`
+    const body= {name,username}
+    return this.http.put<RespEditar>(url,body).pipe(
+      tap(resp => {
+        if(resp.status){
+          console.log("editado");
+        }
+      }),
+      map(resp=> resp.status),
+      catchError( err => of(false) )
+
+    )
+    
+  }
+  
 }

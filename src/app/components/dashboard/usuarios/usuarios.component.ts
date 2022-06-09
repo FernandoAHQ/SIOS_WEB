@@ -10,6 +10,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { query } from '@angular/animations';
 import { ServicesByStatusService } from '../../../services/services-by-status.service';
 import { Role } from 'src/app/interfaces/RespApi';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalEditUserComponent } from './modal-edit-user/modal-edit-user.component';
 
   
   
@@ -26,12 +28,13 @@ import { Role } from 'src/app/interfaces/RespApi';
 
 export class UsuariosComponent implements OnInit {
 
-  role_selected: string = "user_role" ;
+  role_selected: string = "USER_ROLE" ;
 
   roles!: Role[];
 
 
   constructor(
+    public dialog: MatDialog,
     private AllUsersTableService: AllUsersTableService,
     private activatedRoute: ActivatedRoute,
     private router:Router,
@@ -50,10 +53,12 @@ export class UsuariosComponent implements OnInit {
           this.PaginaActual= 1;
         }
         else{this.PaginaActual=querys.page}
-        if(!querys.role){
-          this.role_selected= 'user_role'
+
+        if(!querys.value){
+          this.role_selected= 'USER_ROLE'
         }
-        else{ this.role_selected=querys.role}
+        else{ this.role_selected=querys.value}
+
         this._getInitUsers(this.role_selected, this.PaginaActual)
       })
     }
@@ -66,9 +71,11 @@ export class UsuariosComponent implements OnInit {
 
   
   PaginaActual : number =1;
-  Cargando= false;
-  ELEMENT_DATA_TABLE: DataUsers[] = this._Users;
+  Cargando= false;  
   TotalResultados: number = 0;
+
+  
+  ELEMENT_DATA_TABLE: DataUsers[] = this._Users;
   displayedColumns: string[] = ['Foto', 'Usuario', 'Nombre', 'Role', 'Acciones'];
   dataSource = new  MatTableDataSource <DataUsers>(this.ELEMENT_DATA_TABLE);
   
@@ -110,9 +117,19 @@ export class UsuariosComponent implements OnInit {
 
     //this._getInitUsers(1)
     
-    this.router.navigateByUrl(`dashboard/usuarios?page=1&role=${newRole}`)
+    this.router.navigateByUrl(`dashboard/usuarios?page=1&value=${newRole}`)
     //console.log(`ROLES TS   `+ newRole +`  ---->   ` + `dashboard/usuarios?page=1&role=${newRole}`  );
 
+
+  }
+
+
+  editar (User:DataUsers ){
+    
+    this.dialog.open(ModalEditUserComponent, {width: '300px',data:User})
+
+
+    console.log(User);
 
   }
 

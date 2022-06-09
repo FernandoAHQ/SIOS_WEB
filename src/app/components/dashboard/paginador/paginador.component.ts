@@ -12,8 +12,9 @@ export class PaginadorComponent implements OnInit {
 
   @Input() totalResults: number =1;
   @Input() limitProducts: number=1;
+  @Input() value: string='';
   currentPage: number=1;
-  currentRole: string= ''
+  currentvalue: string= ''
   totalPages: number=1;
   lastPage: number=1;
   pages: [] = [];
@@ -25,17 +26,19 @@ export class PaginadorComponent implements OnInit {
   ngOnInit(): void {
 
     this.activatedRoute.queryParams
-      .subscribe( ({page,role})  => {
+      .subscribe( ({page,value})  => {
         if (!page) {
           page = 1
         }
-        if (!role) {
-          role = 'user_role'
+        if (!value) {
+          value = this.value;
         }
+        this.currentvalue= value;
+        console.log("ESTE ES EL VALOR DEL VALUE  "+value);
         this.totalPages = Math.trunc( this.totalResults / this.limitProducts ) + 1
         this.lastPage = this.totalPages
-        this.currentRole= role;
-        console.log(role);
+        this.currentvalue= value;
+        console.log(value);
 
         this.currentPage = Number( page )
       })
@@ -52,11 +55,11 @@ export class PaginadorComponent implements OnInit {
   changePage( page: number ){
 
     this.currentPage = page
-    this.currentRole
+    this.currentvalue
     const url = this.router.url.split('?')[0]
     console.log(url)
-    this.router.navigateByUrl(`${ url }?page=${ page }&role=${ this.currentRole }`)
-
+      this.router.navigateByUrl(`${ url }?page=${page}&value=${this.currentvalue}`)
+    
   }
 
 

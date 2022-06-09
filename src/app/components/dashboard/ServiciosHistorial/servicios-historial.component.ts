@@ -17,10 +17,6 @@ import { query } from '@angular/animations';
 })
 export class ServiciosHistorialComponent implements OnInit {
 
-  Cargando= false;
-  PaginaActual : number =1;
-  TotalResultados: number = 0;
-
   Levels!: Status[];
 
   status_selected: string = "not-assigned" ;
@@ -37,18 +33,26 @@ export class ServiciosHistorialComponent implements OnInit {
 
     this.activatedRoute.queryParams.subscribe((querys:any)=>{
 
+      
+
       if(!querys.page){
         this.PaginaActual= 1;
-      }
+        }
       else{this.PaginaActual=querys.page}
-       if(!querys.role){
-        this.status_selected ="not-assigned"
-      }
-      else{this.status_selected=querys.status}
+
+      if(!querys.value){
+        this.status_selected ="assigned"
+        }
+      else{this.status_selected=querys.value}
+
+      console.log(querys.page+ "     " + querys.value);
+
+      this._getInitServices(this.status_selected, this.PaginaActual);
 
     })
 
-    this._getInitServices(this.status_selected, this.PaginaActual);
+  
+   
   }
 
   get _Users(){  
@@ -58,10 +62,13 @@ export class ServiciosHistorialComponent implements OnInit {
   }
 
     
-  
+  Cargando= false;
+  // existe= false;
+  PaginaActual : number =1;
+  TotalResultados: number = 0;
 
   ELEMENT_DATA_TABLE: Service[] = this._Users;
-  displayedColumns: string[] = ['ID', 'Usuario', 'Status', 'Asignado' ,"Nivel",'Acciones'];
+  displayedColumns: string[] = ['Titulo', 'Usuario' ,'Status', 'Asignado' ,"Nivel",'Acciones'];
   dataSource = new  MatTableDataSource <Service>(this.ELEMENT_DATA_TABLE);
   
   
@@ -72,6 +79,7 @@ export class ServiciosHistorialComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  
   _getInitServices(status : string, page: number){ 
 
     this.Cargando=true;
@@ -82,7 +90,7 @@ export class ServiciosHistorialComponent implements OnInit {
         
         this.dataSource.data = resp.services as Service[]
         this.TotalResultados =  resp.totalResults;
-        console.log(resp);
+        //console.log(resp);
         this.Cargando= false;
       }
         
@@ -90,17 +98,15 @@ export class ServiciosHistorialComponent implements OnInit {
     )
   }
 
-  //cargarUsuarios(){
-    //  const data= "Admin_role"
-    //  this.ServicesByStatusService.Get_ServicesAPI(data).subscribe(
-    //  resp=> this.dataSource.data = resp.services as Service[]
-    //)
-  //}
 
   cambioStatus(newStatus : any){
 
-    this.router.navigateByUrl(`dashboard/servicios/historial?page=1&status=${newStatus}`)
-
+    // if(newStatus=="not-assigned"){
+    //   this.existe=false
+    // }
+    // else{this.existe=true}
+    this.router.navigateByUrl(`dashboard/servicios/historial?page=1&value=${newStatus}`)
+    console.log(newStatus);
   }
 
 

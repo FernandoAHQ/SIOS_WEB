@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import io,{Socket} from 'socket.io-client'
-
+import { AssignInterface } from '../interfaces/Interfaces';
+import { GradeInterface } from '../interfaces/Interfaces';
+import { ServiciosService } from './admin-role/servicios.service';
+import Push from 'push.js'
 
 ///const url=  'http://10.1.25.46:4000';
   const url=  'https://sios-server.herokuapp.com';
@@ -15,7 +18,7 @@ export class SocketWebService  {
   socket?: Socket
   public StatusSocket: boolean = false;
 
-    constructor() { 
+    constructor(private servicios: ServiciosService ) { 
       
 
     }
@@ -47,17 +50,40 @@ export class SocketWebService  {
 
      escucharService(){
 
-      this.socket?.on('new-service', (payload)=>{
-
-        console.log(payload)
-
+      this.socket?.on('services-all', (payload)=>{
+        
+        console.log("PASE POR AQUI ");
+        this.servicios.leerServices(payload);
+        console.log(payload);
       })
 
      }
+
+     asignarServicio(assigned: AssignInterface){
+      this.socket?.emit("assigned", assigned);
+    }
+
+    calificarServicio(grade: GradeInterface, service: String){
+      this.socket?.emit("calificar-service", {
+        service: service,
+        grade: grade
+      });
+
+      console.log("SENT TO SERVER: " + {
+        to: '',
+        from: '',
+        grade: grade
+      });
+    }
 
 
     disconnect() {
       this.socket!.disconnect();
     }
+
+   
+    
+
+
 
 }

@@ -9,6 +9,10 @@ import { CrearDeptoComponent } from './departamentos/crear-depto/crear-depto.com
 import { AsignarServiceComponent } from './asignarService/asignar-service.component';
 import { ServiciosComponent } from './servicios/servicios.component';
 import { CommonModule } from '@angular/common';
+import { CrearPeriodoComponent } from './periodos/crear-periodo/crear-periodo.component';
+import { PeriodosComponent } from './periodos/periodos.component';
+import { BitacoraComponent } from './bitacora/bitacora.component';
+import { RankingComponent } from './ranking/ranking.component';
 
 const routes: Routes = [
 
@@ -19,7 +23,11 @@ const routes: Routes = [
     {path:  'crearUsuario', component: CrearComponent},
     {path:  'crearUsuario/:id', component: CrearComponent},
     {path:  'departamentos', component: DepartamentosComponent},
+    {path:  'periodos', component: PeriodosComponent},
+    {path:  'ranking', component: RankingComponent},
+    {path:  'bitacora', component: BitacoraComponent},
     {path:  'crearDepto', component: CrearDeptoComponent},
+    {path:  'crearPeriodo', component: CrearPeriodoComponent},
     {path:  'asignar', component: AsignarServiceComponent},
     {path:  'servicios', loadChildren: ()=>import('./servicios/servicios.module').then(m=>m.ServiciosModule)}
 

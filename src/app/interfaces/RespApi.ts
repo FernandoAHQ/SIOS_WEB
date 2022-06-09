@@ -10,9 +10,11 @@ export interface Service {
     user:      User;
     status:    string;
     device:    any[];
+    isRanked:  boolean;
     staff:     any[];
     createdAt: Date;
     updatedAt: Date;
+    assignedTo? : AssignedTo
 }
 
 export interface Report {
@@ -26,6 +28,11 @@ export interface User {
     username: string;
 }
 
+export interface AssignedTo {
+    _id:      string;
+    name:     string;
+    username: string;
+}
 
 
 export interface GetRoles {

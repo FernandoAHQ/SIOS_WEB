@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.prod';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Service, RespTableServices, GetRoles, Role, GetStatus, Status, GetSeverities, Severity, GetActivateUsers, ChicoServicio } from '../interfaces/RespApi';
+import { RespBitacora, Bitacora, RespuestaCrearPeriodo } from '../interfaces/Interfaces';
+
 
 
 
@@ -20,6 +22,7 @@ export class ServicesByStatusService {
   private Status!:                Status[]
   private Severities!:            Severity[];
   private ChicosServicioActivos!: ChicoServicio[];
+  private bitacora!:             Bitacora[];
 
   get DataTable(){ return {...this.Servicios}}
 
@@ -28,6 +31,8 @@ export class ServicesByStatusService {
   get DataStatus() {return {...this.Status}}
 
   get DataSeverities(){ return {...this.Severities}}
+
+  get DataBitacora(){ return {...this.bitacora} }
 
 
   constructor(private http: HttpClient) { }
@@ -40,6 +45,9 @@ export class ServicesByStatusService {
       tap(resp => {
         if(resp.status){
           this.Servicios= resp.services!;
+          this.Servicios.forEach((servicio)=>{
+            servicio.status= this.statusTranslate(servicio as Service)
+          })
         }
       })
 
@@ -105,6 +113,57 @@ export class ServicesByStatusService {
 
 
   }
+
+  statusTranslate(element : Service):string{
+
+    switch(element.status){
+      case 'assigned':
+        return 'Asignado';
+
+      case 'not-assigned':
+        return 'Sin Asignar';
+
+      case 'pending':
+        return 'Pendiente';
+
+        case 'cancelled':
+          return 'Cancelado';
+
+          case 'finalized':
+            return 'Finalizado';
+    }
+    return "Otro";
+  }
+
+
+
+  GetBitacora(PaginaActual:any){
+
+    const url= `${this.baseURL}/services/bitacora?page=${PaginaActual}`
+    return this.http.get<RespBitacora>(url).pipe(
+      tap(resp=>{
+
+        this.bitacora = resp.bitacora
+
+      })
+    )
+
+  }
+
+  CrearNuevoPeriodos(name:string, startDate: string, finalDate:string){
+
+    const url= `${this.baseURL}/periods/create`
+    const body= {name, startDate, finalDate}
+
+    return this.http.post<RespuestaCrearPeriodo>(url,body).pipe(
+      tap(resp=>{
+
+      })
+    )
+
+
+  }
+
 
 
 }

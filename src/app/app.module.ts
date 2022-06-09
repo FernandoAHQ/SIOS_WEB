@@ -13,11 +13,13 @@ import { CompartidoModule } from './components/compartido/compartido.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorTokenService } from './Interceptors/interceptor-token.service';
 import { CommonModule } from '@angular/common';
+import { CalificarComponent } from './components/calificar/calificar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    CalificarComponent,
 
   ],
   imports: [
