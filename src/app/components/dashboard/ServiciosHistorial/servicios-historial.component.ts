@@ -7,6 +7,9 @@ import { Status } from '../../../interfaces/RespApi';
 import { tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { query } from '@angular/animations';
+import { CalificarComponent } from './calificar/calificar.component';
+import { MatDialog } from '@angular/material/dialog';
+import { environment } from '../../../../environments/environment';
 
 
 
@@ -22,6 +25,7 @@ export class ServiciosHistorialComponent implements OnInit {
   status_selected: string = "not-assigned" ;
 
   constructor( 
+    public dialog: MatDialog,
     private ServicesByStatusService: ServicesByStatusService, 
     private activatedRoute: ActivatedRoute, 
     private router:Router
@@ -88,7 +92,18 @@ export class ServiciosHistorialComponent implements OnInit {
         
         console.log(resp);
         
+        const url = environment.baseURL
+
         this.dataSource.data = resp.services as Service[]
+
+        this.dataSource.data.forEach((elem)=>{
+
+          
+          elem.evidenceImage= `${url}/images/services/${elem.evidenceImage}`
+
+        });
+
+
         this.TotalResultados =  resp.totalResults;
         //console.log(resp);
         this.Cargando= false;
@@ -117,6 +132,17 @@ export class ServiciosHistorialComponent implements OnInit {
         this.Levels=resp.status
       }
     )
+
+  }
+
+
+
+  calificar(servicio : Service  ){
+
+    this.dialog.open(CalificarComponent, {height: '600px', width: '450px', data:servicio})
+ 
+
+    console.log(servicio);
 
   }
 

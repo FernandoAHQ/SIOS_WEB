@@ -12,6 +12,7 @@ import { ServicesByStatusService } from '../../../services/services-by-status.se
 import { Role } from 'src/app/interfaces/RespApi';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalEditUserComponent } from './modal-edit-user/modal-edit-user.component';
+import { environment } from '../../../../environments/environment';
 
   
   
@@ -90,10 +91,20 @@ export class UsuariosComponent implements OnInit {
   _getInitUsers(role : string, page: number){ 
 
     //console.log(`${role}     ${page}`);
+
+    const url= environment.baseURL;
+
     this.Cargando=true;
     this.AllUsersTableService.Get_UserAPI(role,page).subscribe(
       resp=> {
         this.dataSource.data = resp.users as DataUsers[]
+
+        this.dataSource.data.forEach((elem)=>{
+
+          elem.image= `${url}/images/users/${elem.image}`
+
+        });
+
         this.TotalResultados= resp.totalResults;
         //console.log(resp)
         this.Cargando= false;

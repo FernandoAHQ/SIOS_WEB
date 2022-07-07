@@ -5,14 +5,14 @@ import { GradeInterface } from '../interfaces/Interfaces';
 import { ServiciosService } from './admin-role/servicios.service';
 import Push from 'push.js'
 
-///const url=  'http://10.1.25.46:4000';
-  const url=  'https://sios-server.herokuapp.com';
+//const url=  'https://sios-server-new.herokuapp.com';
+  const url=  'http://10.1.41.40:4000';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class SocketWebService  {
+export class SocketWebService{
 
 
   socket?: Socket
@@ -65,6 +65,7 @@ export class SocketWebService  {
 
     calificarServicio(grade: GradeInterface, service: String){
       this.socket?.emit("calificar-service", {
+        from: localStorage.getItem("IdAdmin") || "",
         service: service,
         grade: grade
       });

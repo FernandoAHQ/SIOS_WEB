@@ -21,3 +21,17 @@ export interface User {
     isActive: boolean;
     __v:      number;
 }
+
+
+export interface RespRegisterPC {
+    status:      boolean;
+    message:     string;
+    newComputer: NewComputer;
+}
+
+export interface NewComputer {
+    department: string;
+    folio:      string;
+    status:     string;
+    _id:        string;
+}

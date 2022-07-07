@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Bitacora } from 'src/app/interfaces/Interfaces';
 import { ServicesByStatusService } from '../../../services/services-by-status.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { VerBitacoraComponent } from './ver-bitacora/ver-bitacora.component';
 
 @Component({
   selector: 'app-bitacora',
@@ -16,7 +19,8 @@ export class BitacoraComponent implements OnInit {
   constructor(
     private ServicesByStatusService: ServicesByStatusService,
     private activatedRoute: ActivatedRoute,
-    private Router: Router
+    private Router: Router,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -41,10 +45,21 @@ export class BitacoraComponent implements OnInit {
 
   }
 
+  get _Users(){  
+    
+    return this.ServicesByStatusService.DataBitacora
+  
+  }
+
   Cargando= false;
   // existe= false;
   PaginaActual : number =1;
   TotalResultados: number = 0;
+
+  ELEMENT_DATA_TABLE: Bitacora[] = this._Users;
+  displayedColumns: string[] = ['Descripcion', 'Solucion', 'Acciones'];
+  dataSource = new  MatTableDataSource <Bitacora>(this.ELEMENT_DATA_TABLE);
+
 
 
   GetInitBitacora(PaginaActual: any){
@@ -53,14 +68,21 @@ export class BitacoraComponent implements OnInit {
     this.ServicesByStatusService.GetBitacora(PaginaActual).subscribe(
       resp=>{
         
-        this.datas = resp.bitacora as Bitacora[];
-        console.log(this.datas);
+        this.dataSource.data = resp.bitacora as Bitacora[];
         this.TotalResultados =  resp.totalResults;
         this.Cargando= false;
       }
     )
 
   }
+
+
+  Ver(datos: Bitacora){
+
+    this.dialog.open(VerBitacoraComponent, {height: '300px', width: '450px', data: datos})
+
+  }
+
 
 
 }

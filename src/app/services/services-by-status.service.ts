@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.prod';
 import { map, catchError, tap } from 'rxjs/operators';
-import { Service, RespTableServices, GetRoles, Role, GetStatus, Status, GetSeverities, Severity, GetActivateUsers, ChicoServicio } from '../interfaces/RespApi';
+import { Service, RespTableServices, GetRoles, Role, GetStatus, Status, GetSeverities, Severity, GetActivateUsers, ChicoServicio, GetAllComputers, Computer, Ap, GetAllAps, GetAllVlans, VLAN, Switch, GetAllSwitches } from '../interfaces/RespApi';
 import { RespBitacora, Bitacora, RespuestaCrearPeriodo } from '../interfaces/Interfaces';
+import { Ranking } from '../interfaces/interfaceRanking';
+import { Department, RespDepartment, RespRegisterPC } from '../interfaces/InterfaceAllDepartment';
 
 
 
@@ -23,7 +25,13 @@ export class ServicesByStatusService {
   private Severities!:            Severity[];
   private ChicosServicioActivos!: ChicoServicio[];
   private bitacora!:             Bitacora[];
+  private inventory!:             Computer[];
+  private Aps!:                   Ap[];
+  private Vlans!:                 VLAN[];
+  private Switches!:              Switch[];
+  private Deparments!:             Department[];
 
+  
   get DataTable(){ return {...this.Servicios}}
 
   get DataRoles(){ return {...this.Roles}}
@@ -33,6 +41,16 @@ export class ServicesByStatusService {
   get DataSeverities(){ return {...this.Severities}}
 
   get DataBitacora(){ return {...this.bitacora} }
+
+  get DataInventory(){ return {...this.inventory} }
+
+  get DataAps(){ return {...this.Aps} }
+
+  get DataVlan(){ return {...this.Vlans} }
+
+  get DataSwitches(){ return {...this.Switches} }
+
+  get DataDeparments(){ return {...this.Deparments} }
 
 
   constructor(private http: HttpClient) { }
@@ -63,6 +81,18 @@ export class ServicesByStatusService {
     .pipe(
       tap(resp=>{
         this.Roles = resp.roles!;
+      })
+    )
+
+  }
+
+  Get_Departments(){
+
+    const url = `${this.baseURL}/departments/all`
+
+    return this.http.get<RespDepartment>(url).pipe(
+      tap(resp=>{
+        this.Deparments = resp.departments
       })
     )
 
@@ -165,5 +195,102 @@ export class ServicesByStatusService {
   }
 
 
+  GetRanking(){
+
+    const url = `${this.baseURL}/periods/active`
+
+    return this.http.get<Ranking>(url).pipe(
+    tap(resp=>{
+       })
+    )
+
+
+  }
+
+
+  GetInventory(type:any){
+
+    const url= `${this.baseURL}/inventory/${type}`
+
+    return this.http.get<GetAllComputers>(url).pipe(
+      tap(resp=>{
+
+        this.inventory = resp.computers
+
+      })
+    )
+
+  }
+
+  GetInventoryAp(type:any){
+
+    const url= `${this.baseURL}/inventory/${type}`
+
+    return this.http.get<GetAllAps>(url).pipe(
+      tap(resp=>{
+
+        this.Aps = resp.aps
+
+      })
+    )
+
+  }
+
+  GetInventoryVlan(type:any){
+
+    const url= `${this.baseURL}/inventory/${type}`
+
+    return this.http.get<GetAllVlans>(url).pipe(
+      tap(resp=>{
+
+        this.Vlans = resp.vlans
+
+      })
+    )
+
+  }
+
+  GetInventorySwitches(type:any){
+
+    const url= `${this.baseURL}/inventory/${type}`
+
+    return this.http.get<GetAllSwitches>(url).pipe(
+      tap(resp=>{
+
+        this.Switches = resp.switches
+
+      })
+    )
+
+  }
+
+
+  PostRegistrarPC(department:any, folio:any, status: any){
+
+    const url= `${this.baseURL}/inventory/computers/register`
+    const body={department, folio, status}
+    console.log(body);
+    return this.http.post<RespRegisterPC>(url, body).pipe(
+      tap(resp=>{
+        console.log(resp.status);
+
+      })
+    )
+
+
+  }
+
+
+  ActualizarPC(id:any, department:any, folio:any, status: any){
+    const url= `${this.baseURL}/inventory/computers/update`
+    const body={id,department, folio, status}
+    console.log(body);
+
+    return this.http.post(url,body).pipe(
+      tap(resp=>{
+        console.log(resp);
+      })
+    )
+  }
 
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RegistraUsuarioService } from '../../../../services/registra-usuario.service';
+import { Router } from '@angular/router';
 
 interface Roles {
   value: string;
@@ -36,6 +37,7 @@ export class CrearComponent implements OnInit {
   RegisForm: FormGroup;
 
   constructor(
+    private Router:Router,
     private fb:FormBuilder, 
     private _snackBar: MatSnackBar,
     private RegistraUsuarioService: RegistraUsuarioService) {
@@ -62,8 +64,8 @@ export class CrearComponent implements OnInit {
       .subscribe( resp =>{
         if(resp){
 
-          this.MensajeUsuarioOk(this.RegistraUsuarioService.usuario.name)
-          
+          this.MensajeUsuarioOk(name)
+
         } else{
 
           this.error("Ocurrio un Error")
@@ -86,6 +88,8 @@ export class CrearComponent implements OnInit {
       verticalPosition: 'bottom',
 
     })
+
+    this.Router.navigateByUrl("/dashboard/usuarios")
   }
 
     error(mensaje : string){

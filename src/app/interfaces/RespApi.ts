@@ -5,16 +5,22 @@ export interface RespTableServices {
 }
 
 export interface Service {
-    _id:       string;
-    report:    Report;
-    user:      User;
-    status:    string;
-    device:    any[];
-    isRanked:  boolean;
-    staff:     any[];
-    createdAt: Date;
-    updatedAt: Date;
-    assignedTo? : AssignedTo
+    _id:            string;
+    period:         string;
+    report:         Report;
+    user:           AssignedTo;
+    status:         string;
+    device:         any[];
+    staff:          any[];
+    isRanked:       boolean;
+    createdAt:      Date;
+    updatedAt:      Date;
+    assignedTo:     AssignedTo;
+    severity:       string;
+    description:    string;
+    feedback:       string;
+    solution:       string;
+    evidenceImage?: string;
 }
 
 export interface Report {
@@ -83,3 +89,101 @@ export enum RoleSite {
     SiteRole = "SITE_ROLE",
 }
 
+export interface GetAllComputers {
+    status:       boolean;
+    computers:    Computer[];
+    totalResults: number;
+}
+
+export interface Computer {
+    _id:        string;
+    department: Department;
+    folio:      string;
+    macAddress: string;
+    status:     string;
+    encargado:  Encargado;
+}
+
+export interface Department {
+    _id:       string;
+    name:      string;
+    ubication: string;
+    user:      string;
+    __v:       number;
+}
+
+export interface Encargado {
+    _id:      string;
+    name:     string;
+    username: string;
+    password: string;
+    image:    string;
+    role:     string;
+    online:   boolean;
+    isActive: boolean;
+    __v:      number;
+}
+
+export interface GetAllAps {
+    status:       boolean;
+    aps:          Ap[];
+    totalResults: number;
+}
+
+export interface Ap {
+    _id:       string;
+    etiqueta:  string;
+    mac:       string;
+    serie:     string;
+    usuario:   string;
+    password:  string;
+    marca:     string;
+    modelo:    string;
+    ubicacion: string;
+}
+
+export interface GetAllVlans {
+    status:       boolean;
+    vlans:        VLAN[];
+    totalResults: number;
+}
+
+export interface VLAN {
+    _id:          string;
+    vlan:         string;
+    name:         string;
+    ip:           string;
+    mask:         string;
+    gateway:      string;
+    broadcast:    string;
+    staticStart:  string;
+    staticEnd:    string;
+    dynamicStart: string;
+    dynamicEnd:   string;
+}
+
+export interface GetAllSwitches {
+    status:       boolean;
+    switches:     Switch[];
+    totalResults: number;
+}
+
+export interface Switch {
+    _id:           string;
+    name:          string;
+    building:      string;
+    user:          string;
+    ip:            string;
+    mask:          string;
+    password:      string;
+    adminPorts:    string[];
+    trunkPort:     string;
+    brand:         string;
+    model:         string;
+    serie:         string;
+    ethernetPorts: number[];
+    gigabitPorts:  number[];
+    sfpPorts:      number[];
+    poePorts:      number[];
+    console:       boolean;
+}

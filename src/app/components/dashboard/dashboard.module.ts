@@ -21,6 +21,12 @@ import { PeriodosComponent } from './periodos/periodos.component';
 import { CrearPeriodoComponent } from './periodos/crear-periodo/crear-periodo.component';
 import { ModalperiodosComponent } from './periodos/modalperiodos/modalperiodos.component';
 import { RankingComponent } from './ranking/ranking.component';
+import { VerBitacoraComponent } from './bitacora/ver-bitacora/ver-bitacora.component';
+import { InventarioComponent } from './inventario/inventario.component';
+import { ComputadorasComponent } from './inventario/computadoras/computadoras.component';
+import { AccessPointComponent } from './inventario/access-point/access-point.component';
+import { VlanComponent } from './inventario/vlan/vlan.component';
+import { SwitchComponent } from './inventario/switch/switch.component';
 
 
 
@@ -45,6 +51,12 @@ import { RankingComponent } from './ranking/ranking.component';
     CrearPeriodoComponent,
     ModalperiodosComponent,
     RankingComponent,
+    VerBitacoraComponent,
+    InventarioComponent,
+    ComputadorasComponent,
+    AccessPointComponent,
+    VlanComponent,
+    SwitchComponent,
   ],
   imports: [
     CommonModule,

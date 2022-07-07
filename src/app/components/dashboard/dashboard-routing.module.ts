@@ -13,6 +13,8 @@ import { CrearPeriodoComponent } from './periodos/crear-periodo/crear-periodo.co
 import { PeriodosComponent } from './periodos/periodos.component';
 import { BitacoraComponent } from './bitacora/bitacora.component';
 import { RankingComponent } from './ranking/ranking.component';
+import { InventarioComponent } from './inventario/inventario.component';
+import { RegistrarComputadoraComponent } from './inventario/computadoras/registrar-computadora/registrar-computadora.component';
 
 const routes: Routes = [
 
@@ -29,7 +31,11 @@ const routes: Routes = [
     {path:  'crearDepto', component: CrearDeptoComponent},
     {path:  'crearPeriodo', component: CrearPeriodoComponent},
     {path:  'asignar', component: AsignarServiceComponent},
-    {path:  'servicios', loadChildren: ()=>import('./servicios/servicios.module').then(m=>m.ServiciosModule)}
+    {path:  'servicios', loadChildren: ()=>import('./servicios/servicios.module').then(m=>m.ServiciosModule)},
+
+
+    {path:  'inventario', loadChildren: ()=>import('./inventario/inventario.module').then(m=>m.InventarioModule)},
+    {path:  'Register-Computer', component: RegistrarComputadoraComponent},
 
   ]}
 ];

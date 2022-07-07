@@ -21,6 +21,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { PaginadorComponent } from '../dashboard/paginador/paginador.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { StarRatingModule } from 'angular-star-rating';
+import {MatSliderModule} from '@angular/material/slider';
 
 @NgModule({
   declarations: [PaginadorComponent],
@@ -44,6 +46,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatPaginatorModule,
     MatDialogModule,
     MatDatepickerModule,
+    StarRatingModule,
+    MatSliderModule
     
   ],
   exports:[
@@ -68,6 +72,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     PaginadorComponent,
     MatDialogModule,
     MatDatepickerModule,
+    StarRatingModule,
+    MatSliderModule
     
 
   ]
