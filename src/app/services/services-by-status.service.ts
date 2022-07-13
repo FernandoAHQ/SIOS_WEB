@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.prod';
 import { map, catchError, tap } from 'rxjs/operators';
-import { Service, RespTableServices, GetRoles, Role, GetStatus, Status, GetSeverities, Severity, GetActivateUsers, ChicoServicio, GetAllComputers, Computer, Ap, GetAllAps, GetAllVlans, VLAN, Switch, GetAllSwitches } from '../interfaces/RespApi';
+import { Service, RespTableServices, GetRoles, Role, GetStatus, Status, GetSeverities, Severity, GetActivateUsers, ChicoServicio, GetAllComputers, Computer, Ap, GetAllAps, GetAllVlans, VLAN, Switch, GetAllSwitches, RespRegisterVLAN, RespUpdateVLAN, RegisterAp, RespUpdateAp } from '../interfaces/RespApi';
 import { RespBitacora, Bitacora, RespuestaCrearPeriodo } from '../interfaces/Interfaces';
 import { Ranking } from '../interfaces/interfaceRanking';
 import { Department, RespDepartment, RespRegisterPC } from '../interfaces/InterfaceAllDepartment';
@@ -208,9 +208,9 @@ export class ServicesByStatusService {
   }
 
 
-  GetInventory(type:any){
+  GetInventory(type:any, page:any){
 
-    const url= `${this.baseURL}/inventory/${type}`
+    const url= `${this.baseURL}/inventory/${type}?page=${page}`
 
     return this.http.get<GetAllComputers>(url).pipe(
       tap(resp=>{
@@ -291,6 +291,50 @@ export class ServicesByStatusService {
         console.log(resp);
       })
     )
+  }
+
+
+  PostRegistrarAP(body:any){
+    const url= `${this.baseURL}/inventory/aps/register`
+    return this.http.post<RespRegisterVLAN>(url,body).pipe(
+      tap(resp=>{
+        console.log(resp)
+      })
+    )
+  }
+
+  ActualizarAp(body:any){
+
+    const url= `${this.baseURL}/inventory/aps/update`
+    return this.http.post<RespUpdateAp>(url,body).pipe(
+      tap(resp=>{
+        console.log(resp)
+      })
+    )
+
+  }
+
+
+  PostRegistrarVLAN(body:any){
+    const url= `${this.baseURL}/inventory/vlans/register`
+    return this.http.post<RespRegisterVLAN>(url,body).pipe(
+      tap(resp=>{
+        console.log(resp)
+      })
+    )
+
+  }
+
+
+  actualizatVLAN(body:any){
+    
+    const url= `${this.baseURL}/inventory/vlans/update`
+    return this.http.post<RespUpdateVLAN>(url,body).pipe(
+      tap(resp=>{
+       
+      })
+    )
+
   }
 
 }

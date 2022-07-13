@@ -44,7 +44,11 @@
       
     </table>
   
+  <div *ngIf="!Cargando">
+
+    <app-paginador [totalResults]="TotalResultados" [limitProducts]="20"  [value]='value'></app-paginador>
   
+  </div>
   
 
 

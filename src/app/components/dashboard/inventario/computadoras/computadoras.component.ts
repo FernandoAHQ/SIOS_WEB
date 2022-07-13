@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Computer } from 'src/app/interfaces/RespApi';
 import { ServicesByStatusService } from '../../../../services/services-by-status.service';
 import { ModificarComputadorasComponent } from './modificar-computadoras/modificar-computadoras.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-computadoras',
@@ -16,10 +17,29 @@ export class ComputadorasComponent implements OnInit {
 
     public dialog: MatDialog,
     private ServicesByStatusService:ServicesByStatusService ,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.CargarCompus()
+
+    this.activatedRoute.queryParams.subscribe((querys:any)=>{
+
+      
+
+      if(!querys.page){
+        this.PaginaActual= 1;
+        }
+      else{this.PaginaActual=querys.page}
+
+      if(!querys.value){
+        this.value="computers"
+      }
+      else{this.value="computers"}
+
+      this.CargarCompus( this.PaginaActual );
+
+    })
+
   }
   get data(){  
     
@@ -27,6 +47,7 @@ export class ComputadorasComponent implements OnInit {
   
   }
 
+  value=""
   Cargando= false;
   // existe= false;
   PaginaActual : number =1;
@@ -37,9 +58,9 @@ export class ComputadorasComponent implements OnInit {
   dataSource = new  MatTableDataSource <Computer>(this.ELEMENT_DATA_TABLE);
 
 
-  CargarCompus(){
+  CargarCompus(page : any){
 
-    this.ServicesByStatusService.GetInventory("computers").subscribe(
+    this.ServicesByStatusService.GetInventory("computers", page).subscribe(
       resp=>{
         this.dataSource.data = resp.computers as Computer[];
         this.TotalResultados =  resp.totalResults;

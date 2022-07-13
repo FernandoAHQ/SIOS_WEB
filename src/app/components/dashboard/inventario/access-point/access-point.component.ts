@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Ap } from 'src/app/interfaces/RespApi';
 import { ServicesByStatusService } from '../../../../services/services-by-status.service';
+import { ModificarApComponent } from './modificar-ap/modificar-ap.component';
 
 @Component({
   selector: 'app-access-point',
@@ -10,7 +12,8 @@ import { ServicesByStatusService } from '../../../../services/services-by-status
 })
 export class AccessPointComponent implements OnInit {
 
-  constructor(private ServicesByStatusService: ServicesByStatusService) { }
+  constructor(private ServicesByStatusService: ServicesByStatusService,
+    public dialog: MatDialog,) { }
 
   ngOnInit(): void {
     this.CargarAps()
@@ -20,6 +23,7 @@ export class AccessPointComponent implements OnInit {
     return this.ServicesByStatusService.DataAps
   }
 
+  value =""
   Cargando= false;
   // existe= false;
   PaginaActual : number =1;
@@ -31,7 +35,7 @@ export class AccessPointComponent implements OnInit {
 
 
   CargarAps(){
-    this.ServicesByStatusService.GetInventoryAp("ap").subscribe(
+    this.ServicesByStatusService.GetInventoryAp("aps").subscribe(
       resp=>{
         this.dataSource.data = resp.aps as Ap[];
         this.TotalResultados =  resp.totalResults;
@@ -39,6 +43,16 @@ export class AccessPointComponent implements OnInit {
 
       }
     )
+  }
+
+
+
+
+  editar(ap:Ap){
+
+    this.dialog.open(ModificarApComponent, {width: '400px',data:ap})
+
+
   }
 
 }

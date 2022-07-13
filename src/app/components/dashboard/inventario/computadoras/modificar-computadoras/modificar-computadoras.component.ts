@@ -73,6 +73,9 @@ export class ModificarComputadorasComponent implements OnInit {
     console.log("===>" + id);
 
     this.ServicesByStatusService.ActualizarPC(id,deparment, folio, status).subscribe(
+
+      
+      
       
     )
 

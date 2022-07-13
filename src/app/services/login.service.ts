@@ -38,6 +38,7 @@ export class LoginService {
             
             this._usuario=resp.user!;
           }
+          else if (resp.status!){console.log(resp.message);}
         }),
         map(resp=> resp.status),
         catchError( err => of(false) )

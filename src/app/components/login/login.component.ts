@@ -49,8 +49,7 @@ export class LoginComponent implements OnInit {
           this.DarBievenida(this._User.name)
 
         } else{
-
-          this.error()
+          
         }
         
       })

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { VLAN } from 'src/app/interfaces/RespApi';
 import { ServicesByStatusService } from '../../../../services/services-by-status.service';
+import { ModificarVlanComponent } from './modificar-vlan/modificar-vlan.component';
 
 @Component({
   selector: 'app-vlan',
@@ -10,7 +12,9 @@ import { ServicesByStatusService } from '../../../../services/services-by-status
 })
 export class VlanComponent implements OnInit {
 
-  constructor( private ServicesByStatusService:ServicesByStatusService , ) { }
+  constructor( 
+    public dialog: MatDialog,
+    private ServicesByStatusService:ServicesByStatusService , ) { }
 
   ngOnInit(): void {
     this.CargarVlan()
@@ -41,6 +45,15 @@ export class VlanComponent implements OnInit {
 
       }
     )
+
+  }
+
+
+
+  editar(vlan:VLAN){
+
+    this.dialog.open(ModificarVlanComponent, {width: '400px',data:vlan})
+
 
   }
 

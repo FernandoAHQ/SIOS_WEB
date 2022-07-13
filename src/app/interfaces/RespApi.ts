@@ -148,6 +148,12 @@ export interface GetAllVlans {
     totalResults: number;
 }
 
+export interface RespUpdateVLAN {
+    status:  boolean;
+    message: string;
+    vlan:    VLAN;
+}
+
 export interface VLAN {
     _id:          string;
     vlan:         string;
@@ -186,4 +192,51 @@ export interface Switch {
     sfpPorts:      number[];
     poePorts:      number[];
     console:       boolean;
+}
+
+
+export interface RegisterAp {
+    status:  boolean;
+    message: string;
+    newAp:   NewAp;
+}
+
+export interface NewAp {
+    etiqueta:  string;
+    mac:       string;
+    serie:     string;
+    usuario:   string;
+    password:  string;
+    marca:     string;
+    modelo:    string;
+    ubicacion: string;
+    _id:       string;
+}
+
+export interface RespUpdateAp {
+    status:  boolean;
+    message: string;
+    ap:      Ap;
+}
+
+
+
+export interface RespRegisterVLAN {
+    status:  boolean;
+    message: string;
+    newVlan: NewVLAN;
+}
+
+export interface NewVLAN {
+    vlan:         string;
+    name:         string;
+    ip:           string;
+    mask:         string;
+    gateway:      string;
+    broadcast:    string;
+    staticStart:  string;
+    staticEnd:    string;
+    dynamicStart: string;
+    dynamicEnd:   string;
+    _id:          string;
 }
