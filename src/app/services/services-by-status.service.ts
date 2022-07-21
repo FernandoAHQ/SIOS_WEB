@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.prod';
 import { map, catchError, tap } from 'rxjs/operators';
-import { Service, RespTableServices, GetRoles, Role, GetStatus, Status, GetSeverities, Severity, GetActivateUsers, ChicoServicio, GetAllComputers, Computer, Ap, GetAllAps, GetAllVlans, VLAN, Switch, GetAllSwitches, RespRegisterVLAN, RespUpdateVLAN, RegisterAp, RespUpdateAp } from '../interfaces/RespApi';
-import { RespBitacora, Bitacora, RespuestaCrearPeriodo } from '../interfaces/Interfaces';
+import { Service, RespTableServices, GetRoles, Role, GetStatus, Status, GetSeverities, Severity, GetActivateUsers, ChicoServicio, GetAllComputers, Computer, Ap, GetAllAps, GetAllVlans, VLAN, Switch, GetAllSwitches, RespRegisterVLAN, RespUpdateVLAN, RegisterAp, RespUpdateAp, RespTableTasks, TaskLogsResponse } from '../interfaces/RespApi';
+import { RespBitacora, Bitacora, RespuestaCrearPeriodo, Tarea, RespuestaAsignarTarea, taskLog } from '../interfaces/Interfaces';
 import { Ranking } from '../interfaces/interfaceRanking';
 import { Department, RespDepartment, RespRegisterPC } from '../interfaces/InterfaceAllDepartment';
 
@@ -30,8 +30,10 @@ export class ServicesByStatusService {
   private Vlans!:                 VLAN[];
   private Switches!:              Switch[];
   private Deparments!:             Department[];
+  private Tasks!:             Tarea[];
+  private TaskLogs!:             taskLog[];
 
-  
+
   get DataTable(){ return {...this.Servicios}}
 
   get DataRoles(){ return {...this.Roles}}
@@ -52,11 +54,15 @@ export class ServicesByStatusService {
 
   get DataDeparments(){ return {...this.Deparments} }
 
+  get DataTasks(){ return {...this.Tasks} }
+
+  get DataTaskLogs(){ return {...this.TaskLogs} }
+
 
   constructor(private http: HttpClient) { }
 
   Get_ServicesAPI(status : string, page: any){
-  
+
     const url= `${this.baseURL}/services/all/${status}?page=${page}`;
     return this.http.get<RespTableServices>(url)
     .pipe(
@@ -186,6 +192,32 @@ export class ServicesByStatusService {
     const body= {name, startDate, finalDate}
 
     return this.http.post<RespuestaCrearPeriodo>(url,body).pipe(
+      tap(resp=>{
+
+      })
+    )
+
+
+  }
+
+  asignarTarea(task:string, user: string, time:number){
+
+    const url= `${this.baseURL}/tasks/assign`
+    const body= {task, user, time}
+    return this.http.post<RespuestaAsignarTarea>(url,body).pipe(
+      tap(resp=>{
+
+      })
+    )
+
+
+  }
+
+  registrarTarea(name:string, description: string){
+
+    const url= `${this.baseURL}/tasks/newTask`
+    const body= {name, description}
+    return this.http.post<{status: boolean, message: string}>(url,body).pipe(
       tap(resp=>{
 
       })
@@ -327,14 +359,44 @@ export class ServicesByStatusService {
 
 
   actualizatVLAN(body:any){
-    
+
     const url= `${this.baseURL}/inventory/vlans/update`
     return this.http.post<RespUpdateVLAN>(url,body).pipe(
       tap(resp=>{
-       
+
       })
     )
 
+  }
+
+  Get_TasksAPI(page: any){
+
+    const url= `${this.baseURL}/tasks?page=${page}`;
+    return this.http.get<RespTableTasks>(url)
+    .pipe(
+      tap(resp => {
+        if(resp.status){
+          this.Tasks= resp.tasks!;
+
+        }
+      })
+
+    )
+  }
+
+  Get_TaskLogsAPI(page: any){
+
+    const url= `${this.baseURL}/tasks/registered?page=${page}`;
+    return this.http.get<TaskLogsResponse>(url)
+    .pipe(
+      tap(resp => {
+        if(resp.status){
+          this.TaskLogs= resp.registros!;
+
+        }
+      })
+
+    )
   }
 
 }

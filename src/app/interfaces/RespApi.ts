@@ -1,7 +1,15 @@
+import { Tarea, taskLog } from "./Interfaces";
+
 export interface RespTableServices {
-    status:       boolean;
-    services:     Service[];
-    totalResults: number;
+  status:       boolean;
+  services:     Service[];
+  totalResults: number;
+}
+
+export interface RespTableTasks {
+  status:       boolean;
+  tasks:     Tarea[];
+  totalResults: number;
 }
 
 export interface Service {
@@ -239,4 +247,11 @@ export interface NewVLAN {
     dynamicStart: string;
     dynamicEnd:   string;
     _id:          string;
+}
+
+export interface TaskLogsResponse{
+  totalResults: number;
+  status:  boolean;
+  message: string;
+  registros:      taskLog[];
 }

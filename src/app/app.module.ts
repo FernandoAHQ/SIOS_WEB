@@ -35,7 +35,7 @@ import { CalificarComponent } from './components/dashboard/ServiciosHistorial/ca
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorTokenService,
       multi: true
-      
+
     }
 
   ],

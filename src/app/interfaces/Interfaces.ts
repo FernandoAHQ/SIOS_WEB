@@ -1,4 +1,6 @@
+import { DataSource } from "@angular/cdk/collections";
 import { AbstractType } from "@angular/core";
+import { DataUsers } from "./InterfaceAllUser";
 import { Severity } from './RespApi';
 
 export interface LoginInterface{
@@ -26,7 +28,7 @@ export interface User{
         role:       string;
         online:     boolean;
         isActive: boolean;
-        
+
 }
 
 export interface RespuestaRegistrarUsuario{
@@ -45,7 +47,7 @@ export interface RespuestaRegistrarUsuario{
     }
 
     accessToken?:    string;
-} 
+}
 
 
 export interface RespEditar {
@@ -68,14 +70,14 @@ export interface User_Editar {
 
 export interface RegistrarUsuario{
 
-    
+
         name:       string;
         role:       string;
         username:   string;
         password:   string;
 
-    
-} 
+
+}
 
 
 
@@ -134,9 +136,14 @@ export interface Bitacora {
 
 
 export interface RespuestaCrearPeriodo {
-    status:  boolean;
-    message: string;
-    period:  Period;
+  status:  boolean;
+  message: string;
+  period:  Period;
+}
+export interface RespuestaAsignarTarea {
+  status:  boolean;
+  message: string;
+  task:  Tarea;
 }
 
 export interface Period {
@@ -155,6 +162,26 @@ export interface GetAllPeriodos {
 }
 
 export interface GradeInterface {
-    dificulty: number;
-    quality: number;
+  dificulty: number;
+  quality: number;
+}
+
+export interface Tarea {
+  _id: string,
+  name: string;
+  description: string;
+  asignments: [{
+    assignedTo: DataUsers;
+    time: number
+  }]
+}
+  export interface taskLog {
+    _id: string,
+    task: Tarea,
+    user: User,
+    observation: string,
+    solution: string,
+    severity: string,
+    date: Date
+
 }

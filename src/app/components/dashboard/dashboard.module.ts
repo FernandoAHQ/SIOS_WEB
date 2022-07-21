@@ -27,6 +27,7 @@ import { ComputadorasComponent } from './inventario/computadoras/computadoras.co
 import { AccessPointComponent } from './inventario/access-point/access-point.component';
 import { VlanComponent } from './inventario/vlan/vlan.component';
 import { SwitchComponent } from './inventario/switch/switch.component';
+import { TareasComponent } from './tareas/tareas.component';
 
 
 
@@ -57,6 +58,7 @@ import { SwitchComponent } from './inventario/switch/switch.component';
     AccessPointComponent,
     VlanComponent,
     SwitchComponent,
+    TareasComponent,
   ],
   imports: [
     CommonModule,

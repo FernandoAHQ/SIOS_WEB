@@ -23,8 +23,23 @@ export class AllUsersTableService {
   }
 
   Get_UserAPI(usuario : string, page :  any ){
-  
+
     const url= `${this.baseURL}/users/all/${usuario}?page=${page}`;
+    console.log(url);
+    return this.http.get<RespAlluser>(url)
+    .pipe(
+      tap(resp => {
+        if(resp.status){
+          this.AllUsers= resp.users!;
+        }
+      })
+
+    )
+  }
+
+  Get_User_AllAPI(usuario : string){
+
+    const url= `${this.baseURL}/users/allz/${usuario}`;
     console.log(url);
     return this.http.get<RespAlluser>(url)
     .pipe(

@@ -25,24 +25,24 @@ export class RegistrarComputadoraComponent implements OnInit {
     {value: 'Mantenimiento'},
   ];
 
-  DeparmentSelected: string  = ""; 
-  StatusSelected:    string  = ""; 
+  DeparmentSelected: string  = "";
+  StatusSelected:    string  = "";
 
   constructor(
-    private fb:FormBuilder, 
+    private fb:FormBuilder,
     private _snackBar: MatSnackBar,
     private Router:Router,
     private ServicesByStatusService: ServicesByStatusService,
-    
-  ) { 
+
+  ) {
     this.RegisForm =  this.fb.group({
       Departamento: ['',Validators.required],
       Folio: ['',Validators.required],
       Status:['',Validators.required],
     })
   }
-  
-  
+
+
 
   ngOnInit(): void {
     this.getDepartments()
@@ -65,7 +65,6 @@ export class RegistrarComputadoraComponent implements OnInit {
     const deparment = this.RegisForm.value.Departamento
     const folio = this.RegisForm.value.Folio
     const status = this.RegisForm.value.Status
-    console.log("TRY");
 
     this.ServicesByStatusService.PostRegistrarPC(deparment, folio, status).subscribe(
       resp=>{
@@ -87,7 +86,7 @@ export class RegistrarComputadoraComponent implements OnInit {
   MensajeUsuarioOk(MSG : string){
 
     const mensaje = "Se creó correctamente la computadora "+ `${MSG}` + " !!!"
-    
+
     this._snackBar.open(mensaje,'',{
 
       duration: 5000,
@@ -96,7 +95,7 @@ export class RegistrarComputadoraComponent implements OnInit {
 
     })
 
-    location.reload(); 
+    location.reload();
   }
 
   error(mensaje : string){

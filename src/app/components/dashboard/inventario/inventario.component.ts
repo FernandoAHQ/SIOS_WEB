@@ -10,12 +10,19 @@ import { ServicesByStatusService } from '../../../services/services-by-status.se
 })
 export class InventarioComponent implements OnInit {
 
+  categories = [
+    "computers",
+    "switches",
+    "aps",
+    "vlans"
+  ]
+
   constructor(
   ) { }
 
   ngOnInit(): void {
   }
 
-  
+
 
 }
